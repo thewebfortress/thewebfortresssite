@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Onboarding - The Web Fortress</title>
+    <link rel="icon" type="image/jpeg" href="Web Fortress-01.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --teal: #06b6d4;
+            --teal-dark: #0891b2;
+            --teal-light: #22d3ee;
+            --navy: #0f172a;
+            --purple: #8b5cf6;
+            --gray-50: #1e293b;
+            --gray-100: #334155;
+            --gray-600: #94a3b8;
+            --gray-900: #f8fafc;
+            --bg-dark: #0a0f1e;
+            --bg-darker: #020617;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--teal);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 0;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 80px;
+            width: 80px;
+            object-fit: contain;
+        }
+        /* Onboarding Section */
+        .onboarding {
+            padding: 10rem 5% 6rem 5%;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .onboarding::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+        .onboarding::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+        .onboarding-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+        }
+        .onboarding-form {
+            background: var(--gray-50);
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid transparent;
+            background-image: linear-gradient(var(--gray-50), var(--gray-50)), linear-gradient(135deg, var(--teal), var(--purple));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            transition: transform 0.3s;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-100);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), var(--purple));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .progress-text {
+            text-align: center;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        .question-container {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .question-container.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .section-label {
+            color: var(--teal);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+        .question-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        .form-group.hidden {
+            display: none;
+        }
+        .form-group.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--gray-100);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: var(--bg-dark);
+            color: var(--gray-900);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--gray-100);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .checkbox-item:hover {
+            border-color: var(--teal);
+            background: var(--gray-100);
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--teal);
+        }
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1.05rem;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--gray-100);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .radio-item:hover {
+            border-color: var(--teal);
+            background: var(--gray-100);
+        }
+        .radio-item input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--teal);
+        }
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1.05rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .btn {
+            flex: 1;
+            padding: 1.3rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-next {
+            background: var(--teal);
+            color: white;
+        }
+        .btn-next:hover {
+            background: var(--teal-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+        }
+        .btn-prev {
+            background: transparent;
+            border: 2px solid var(--teal);
+            color: var(--teal);
+        }
+        .btn-prev:hover {
+            background: var(--teal);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .success-icon {
+            font-size: 4rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+        .success-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+        .success-text {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+        }
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 5%;
+            }
+            .logo {
+                font-size: 1rem;
+                gap: 0.5rem;
+            }
+            .logo img {
+                height: 45px;
+                width: 45px;
+            }
+            .onboarding {
+                padding: 8rem 5% 4rem 5%;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            .onboarding-form {
+                padding: 2rem 1.5rem;
+            }
+            .question-title {
+                font-size: 1.3rem;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="Web Fortress-01.png" alt="The Web Fortress Logo">
+            The Web Fortress
+        </a>
+    </nav>
+
+    <!-- Onboarding Section -->
+    <section class="onboarding">
+        <div class="onboarding-container">
+            <div class="section-header">
+                <h1 class="section-title">Welcome!</h1>
+                <p class="section-subtitle">Let's get to know your project. This will take about 10 minutes.</p>
+            </div>
+
+            <div class="onboarding-form">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Question 1 of 40</div>
+
+                <form id="onboardingForm">
+                    <!-- Question 1 -->
+                    <div class="question-container active" data-question="1">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">What's your full name?</h2>
+                        <div class="form-group">
+                            <input type="text" name="fullName" required>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-container" data-question="2">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">What's your email address?</h2>
+                        <div class="form-group">
+                            <input type="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-container" data-question="3">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">What's your phone number?</h2>
+                        <div class="form-group">
+                            <input type="tel" id="phoneInput" name="phone" placeholder="(123) 456-7890" maxlength="14" required>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-container" data-question="4">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">What's your company or business name?</h2>
+                        <div class="form-group">
+                            <input type="text" name="companyName" required>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-container" data-question="5">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">Do you have an existing website?</h2>
+                        <div class="form-group">
+                            <input type="text" name="existingWebsite" placeholder="Enter URL or leave blank if none">
+                        </div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question-container" data-question="6">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">What industry or business type are you in?</h2>
+                        <div class="form-group">
+                            <input type="text" name="industry" required placeholder="e.g., Restaurant, Real Estate, E-commerce">
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-container" data-question="7">
+                        <div class="section-label">Basic Information</div>
+                        <h2 class="question-title">How did you hear about us?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="referralSource" value="Google Search" id="ref1">
+                                <label for="ref1">Google Search</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="referralSource" value="Social Media" id="ref2">
+                                <label for="ref2">Social Media</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="referralSource" value="Referral" id="ref3">
+                                <label for="ref3">Referral from friend/colleague</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="referralSource" value="Previous Client" id="ref4">
+                                <label for="ref4">I'm a previous client</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="referralSource" value="Other" id="ref5" onchange="toggleOtherField('ref5', 'otherReferral')">
+                                <label for="ref5">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="otherReferral">
+                            <input type="text" name="referralSourceOther" placeholder="Please specify">
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-container" data-question="8">
+                        <div class="section-label">Project Overview</div>
+                        <h2 class="question-title">What type of website do you need?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="Brand new website" id="type1">
+                                <label for="type1">Brand new website</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="Website redesign" id="type2">
+                                <label for="type2">Website redesign</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="E-commerce store" id="type3">
+                                <label for="type3">E-commerce store</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="Landing page" id="type4">
+                                <label for="type4">Landing page</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="Web application" id="type5">
+                                <label for="type5">Web application</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="websiteType" value="Other" id="type6" onchange="toggleOtherField('type6', 'otherWebsiteType')">
+                                <label for="type6">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="otherWebsiteType">
+                            <input type="text" name="websiteTypeOther" placeholder="Please specify">
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question-container" data-question="9">
+                        <div class="section-label">Project Overview</div>
+                        <h2 class="question-title">What is the main goal of your website?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Generate leads" id="goal1">
+                                <label for="goal1">Generate leads</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Sell products/services" id="goal2">
+                                <label for="goal2">Sell products/services</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Build brand awareness" id="goal3">
+                                <label for="goal3">Build brand awareness</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Provide information" id="goal4">
+                                <label for="goal4">Provide information</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Portfolio/showcase work" id="goal5">
+                                <label for="goal5">Portfolio/showcase work</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="mainGoal" value="Other" id="goal6" onchange="toggleOtherField('goal6', 'otherMainGoal')">
+                                <label for="goal6">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="otherMainGoal">
+                            <input type="text" name="mainGoalOther" placeholder="Please specify">
+                        </div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question-container" data-question="10">
+                        <div class="section-label">Project Overview</div>
+                        <h2 class="question-title">Describe your project in detail</h2>
+                        <div class="form-group">
+                            <textarea name="projectDescription" required placeholder="Tell us about your business, what problem you're trying to solve, and what you want visitors to do on your site"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 11 -->
+                    <div class="question-container" data-question="11">
+                        <div class="section-label">Project Overview</div>
+                        <h2 class="question-title">Do you have existing branding materials?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="branding" value="Yes (logo, colors, fonts)" id="brand1">
+                                <label for="brand1">Yes - I have logo, colors, and fonts</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="branding" value="Partial" id="brand2">
+                                <label for="brand2">Partial - I have some materials</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="branding" value="No" id="brand3">
+                                <label for="brand3">No - I need help with branding</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question-container" data-question="12">
+                        <div class="section-label">Target Audience</div>
+                        <h2 class="question-title">Who is your target audience?</h2>
+                        <div class="form-group">
+                            <textarea name="targetAudience" required placeholder="Describe demographics (age, location, income), pain points, and what they need from your site"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question-container" data-question="13">
+                        <div class="section-label">Target Audience</div>
+                        <h2 class="question-title">Who are your main competitors? (If None Click Next)</h2>
+                        <div class="form-group">
+                            <input type="text" name="competitor1" placeholder="Competitor 1 website URL">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="competitor2" placeholder="Competitor 2 website URL">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="competitor3" placeholder="Competitor 3 website URL">
+                        </div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question-container" data-question="14">
+                        <div class="section-label">Target Audience</div>
+                        <h2 class="question-title">What do you like or dislike about competitor websites?</h2>
+                        <div class="form-group">
+                            <textarea name="competitorFeedback" placeholder="Tell us what works and what doesn't on competitor sites"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question-container" data-question="15">
+                        <div class="section-label">Target Audience</div>
+                        <h2 class="question-title">List 3 websites you love (any industry)</h2>
+                        <div class="form-group">
+                            <input type="text" name="inspiration1" placeholder="Website 1 URL" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="inspiration2" placeholder="Website 2 URL">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="inspiration3" placeholder="Website 3 URL">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="inspirationReason" placeholder="What do you like about these websites?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 16 -->
+                    <div class="question-container" data-question="16">
+                        <div class="section-label">Features & Functionality</div>
+                        <h2 class="question-title">What pages do you need?</h2>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Home" id="page1">
+                                <label for="page1">Home</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="About Us" id="page2">
+                                <label for="page2">About Us</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Services/Products" id="page3">
+                                <label for="page3">Services/Products</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Portfolio/Gallery" id="page4">
+                                <label for="page4">Portfolio/Gallery</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Blog" id="page5">
+                                <label for="page5">Blog</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Contact" id="page6">
+                                <label for="page6">Contact</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="FAQ" id="page7">
+                                <label for="page7">FAQ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="pages" value="Testimonials" id="page8">
+                                <label for="page8">Testimonials</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="pagesOther" placeholder="Other pages needed">
+                        </div>
+                    </div>
+
+                    <!-- Question 17 -->
+                    <div class="question-container" data-question="17">
+                        <div class="section-label">Features & Functionality</div>
+                        <h2 class="question-title">What features do you need?</h2>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Contact form" id="feat1">
+                                <label for="feat1">Contact form</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Email newsletter" id="feat2">
+                                <label for="feat2">Email newsletter signup</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Live chat" id="feat3">
+                                <label for="feat3">Live chat</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Booking system" id="feat4">
+                                <label for="feat4">Booking/scheduling system</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="E-commerce" id="feat5">
+                                <label for="feat5">E-commerce/shopping cart</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="User accounts" id="feat6">
+                                <label for="feat6">User accounts/login</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Search" id="feat7">
+                                <label for="feat7">Search functionality</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Social media integration" id="feat8">
+                                <label for="feat8">Social media integration</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Blog" id="feat9">
+                                <label for="feat9">Blog/news section</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Video" id="feat10">
+                                <label for="feat10">Video integration</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Maps" id="feat11">
+                                <label for="feat11">Maps/location finder</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features" value="Payment processing" id="feat12">
+                                <label for="feat12">Payment processing</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="featuresOther" placeholder="Other features needed">
+                        </div>
+                    </div>
+
+                    <!-- Question 18 -->
+                    <div class="question-container" data-question="18">
+                        <div class="section-label">Features & Functionality</div>
+                        <h2 class="question-title">Do you need content creation help?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="contentHelp" value="Yes, all content" id="content1">
+                                <label for="content1">Yes, need all content written</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="contentHelp" value="Yes, some help" id="content2">
+                                <label for="content2">Yes, need some help</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="contentHelp" value="No" id="content3">
+                                <label for="content3">No, I'll provide all content</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="contentHelp" value="Not sure" id="content4">
+                                <label for="content4">Not sure</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 19 -->
+                    <div class="question-container" data-question="19">
+                        <div class="section-label">Features & Functionality</div>
+                        <h2 class="question-title">Do you have professional photos/images?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="photos" value="Yes, have everything" id="photo1">
+                                <label for="photo1">Yes, I have everything</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="photos" value="Some photos" id="photo2">
+                                <label for="photo2">Some photos, need more</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="photos" value="No" id="photo3">
+                                <label for="photo3">No, need photography/stock photos</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 20 -->
+                    <div class="question-container" data-question="20">
+                        <div class="section-label">Design Preferences</div>
+                        <h2 class="question-title">What style do you prefer?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Modern & minimalist" id="style1">
+                                <label for="style1">Modern & minimalist</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Bold & colorful" id="style2">
+                                <label for="style2">Bold & colorful</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Professional & corporate" id="style3">
+                                <label for="style3">Professional & corporate</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Creative & artistic" id="style4">
+                                <label for="style4">Creative & artistic</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Fun & playful" id="style5">
+                                <label for="style5">Fun & playful</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Elegant & luxurious" id="style6">
+                                <label for="style6">Elegant & luxurious</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="designStyle" value="Not sure" id="style7">
+                                <label for="style7">Not sure / need guidance</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 21 -->
+                    <div class="question-container" data-question="21">
+                        <div class="section-label">Design Preferences</div>
+                        <h2 class="question-title">What are your preferred colors?</h2>
+                        <div class="form-group">
+                            <label>Primary color (if any)</label>
+                            <input type="text" name="primaryColor" placeholder="e.g., Blue, #0066cc, or leave blank">
+                        </div>
+                        <div class="form-group">
+                            <label>Secondary color (if any)</label>
+                            <input type="text" name="secondaryColor" placeholder="e.g., Gray, #333333, or leave blank">
+                        </div>
+                        <div class="form-group">
+                            <label>Accent color (if any)</label>
+                            <input type="text" name="accentColor" placeholder="e.g., Orange, #ff6600, or leave blank">
+                        </div>
+                    </div>
+
+                    <!-- Question 22 -->
+                    <div class="question-container" data-question="22">
+                        <div class="section-label">Design Preferences</div>
+                        <h2 class="question-title">Any design elements you DON'T want?</h2>
+                        <div class="form-group">
+                            <textarea name="designDislikes" placeholder="Tell us about any animations, popups, colors, or styles you want to avoid"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 23 -->
+                    <div class="question-container" data-question="23">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Do you need SEO (search engine optimization)?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="seo" value="Yes, top priority" id="seo1">
+                                <label for="seo1">Yes, top priority</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="seo" value="Yes, basic" id="seo2">
+                                <label for="seo2">Yes, but basic</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="seo" value="Not sure" id="seo3">
+                                <label for="seo3">Not sure</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="seo" value="No" id="seo4">
+                                <label for="seo4">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 24 -->
+                    <div class="question-container" data-question="24">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Do you need the site in multiple languages?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="multiLanguage" value="Yes" id="lang1">
+                                <label for="lang1">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="multiLanguage" value="No" id="lang2">
+                                <label for="lang2">No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="languages" placeholder="If yes, which languages?">
+                        </div>
+                    </div>
+
+                    <!-- Question 25 -->
+                    <div class="question-container" data-question="25">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Do you need ongoing maintenance after launch?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="maintenance" value="Yes, monthly" id="maint1">
+                                <label for="maint1">Yes, monthly updates</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="maintenance" value="Yes, as needed" id="maint2">
+                                <label for="maint2">Yes, as needed</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="maintenance" value="No" id="maint3">
+                                <label for="maint3">No, I'll handle it</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="maintenance" value="Not sure" id="maint4">
+                                <label for="maint4">Not sure</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 26 -->
+                    <div class="question-container" data-question="26">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Will you need training on how to update the site?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="training" value="Yes, comprehensive" id="train1">
+                                <label for="train1">Yes, comprehensive training</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="training" value="Yes, basic" id="train2">
+                                <label for="train2">Yes, basic training</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="training" value="No" id="train3">
+                                <label for="train3">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 27 -->
+                    <div class="question-container" data-question="27">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Do you have a domain name?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="domain" value="Yes" id="dom1">
+                                <label for="dom1">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="domain" value="No" id="dom2">
+                                <label for="dom2">No, need help purchasing one</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="domain" value="Not sure" id="dom3">
+                                <label for="dom3">Not sure</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="domainName" placeholder="If yes, what is it?">
+                        </div>
+                    </div>
+
+                    <!-- Question 28 -->
+                    <div class="question-container" data-question="28">
+                        <div class="section-label">Technical Requirements</div>
+                        <h2 class="question-title">Do you have hosting?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="hosting" value="Yes" id="host1">
+                                <label for="host1">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="hosting" value="No" id="host2">
+                                <label for="host2">No, need hosting recommendations</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="hosting" value="Not sure" id="host3">
+                                <label for="host3">Not sure</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="hostingProvider" placeholder="If yes, who is your host?">
+                        </div>
+                    </div>
+
+                    <!-- Question 29 -->
+                    <div class="question-container" data-question="29">
+                        <div class="section-label">Timeline & Budget</div>
+                        <h2 class="question-title">When do you need the website completed?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="timeline" value="ASAP (2-4 weeks)" id="time1">
+                                <label for="time1">ASAP (within 2-4 weeks)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="timeline" value="1-2 months" id="time2">
+                                <label for="time2">1-2 months</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="timeline" value="2-3 months" id="time3">
+                                <label for="time3">2-3 months</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="timeline" value="3+ months" id="time4">
+                                <label for="time4">3+ months</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="timeline" value="Flexible" id="time5">
+                                <label for="time5">Flexible</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 30 -->
+                    <div class="question-container" data-question="30">
+                        <div class="section-label">Timeline & Budget</div>
+                        <h2 class="question-title">What is your budget range?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="budget" value="$2,000 - $5,000" id="budg1">
+                                <label for="budg1">$250 - $500</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="budget" value="$5,000 - $10,000" id="budg2">
+                                <label for="budg2">$1,000 - $5,000</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="budget" value="$10,000 - $20,000" id="budg3">
+                                <label for="budg3">$5,000 - $10,000</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="budget" value="$20,000+" id="budg4">
+                                <label for="budg4">$10,000+</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="budget" value="Not sure" id="budg5">
+                                <label for="budg5">Not sure / need consultation</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 31 -->
+                    <div class="question-container" data-question="31">
+                        <div class="section-label">Timeline & Budget</div>
+                        <h2 class="question-title">Is this a one-time project or ongoing relationship?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="relationship" value="One-time" id="rel1">
+                                <label for="rel1">One-time project</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="relationship" value="Ongoing" id="rel2">
+                                <label for="rel2">Ongoing (maintenance, updates, marketing)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="relationship" value="Not sure" id="rel3">
+                                <label for="rel3">Not sure</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 32 -->
+                    <div class="question-container" data-question="32">
+                        <div class="section-label">Success Metrics</div>
+                        <h2 class="question-title">How will you measure the success of this website?</h2>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Leads/inquiries" id="metric1">
+                                <label for="metric1">Number of leads/inquiries</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Online sales" id="metric2">
+                                <label for="metric2">Online sales</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Newsletter signups" id="metric3">
+                                <label for="metric3">Newsletter signups</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Time on site" id="metric4">
+                                <label for="metric4">Time on site</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Bounce rate" id="metric5">
+                                <label for="metric5">Bounce rate improvement</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Search rankings" id="metric6">
+                                <label for="metric6">Search engine rankings</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="successMetrics" value="Social shares" id="metric7">
+                                <label for="metric7">Social shares</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="successMetricsOther" placeholder="Other metrics">
+                        </div>
+                    </div>
+
+                    <!-- Question 33 -->
+                    <div class="question-container" data-question="33">
+                        <div class="section-label">Success Metrics</div>
+                        <h2 class="question-title">Do you currently track website analytics?</h2>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="analytics" value="Yes" id="analyt1">
+                                <label for="analyt1">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="analytics" value="No" id="analyt2">
+                                <label for="analyt2">No</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="analytics" value="Want to start" id="analyt3">
+                                <label for="analyt3">Want to start</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="analyticsTools" placeholder="If yes, which tools do you use?">
+                        </div>
+                    </div>
+
+                    <!-- Question 34 -->
+                    <div class="question-container" data-question="34">
+                        <div class="section-label">Additional Information</div>
+                        <h2 class="question-title">Are there any technical integrations needed?</h2>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="integrations" value="CRM system" id="integ1">
+                                <label for="integ1">CRM system</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="integrations" value="Email marketing" id="integ2">
+                                <label for="integ2">Email marketing platform</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="integrations" value="Payment gateway" id="integ3">
+                                <label for="integ3">Payment gateway</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="integrations" value="Shipping calculator" id="integ4">
+                                <label for="integ4">Shipping calculator</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="integrations" value="API integrations" id="integ5">
+                                <label for="integ5">API integrations</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="integrationsOther" placeholder="Other integrations needed">
+                        </div>
+                    </div>
+
+                    <!-- Question 35 -->
+                    <div class="question-container" data-question="35">
+                        <div class="section-label">Additional Information</div>
+                        <h2 class="question-title">Any specific accessibility requirements?</h2>
+                        <div class="form-group">
+                            <textarea name="accessibility" placeholder="e.g., ADA compliance, WCAG standards, screen reader compatibility"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 36 -->
+                    <div class="question-container" data-question="36">
+                        <div class="section-label">Additional Information</div>
+                        <h2 class="question-title">Are there any legal/compliance requirements?</h2>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="compliance" value="GDPR" id="comp1">
+                                <label for="comp1">GDPR compliance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="compliance" value="HIPAA" id="comp2">
+                                <label for="comp2">HIPAA compliance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="compliance" value="Cookie consent" id="comp3">
+                                <label for="comp3">Cookie consent</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="compliance" value="Terms & conditions" id="comp4">
+                                <label for="comp4">Terms & conditions</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="compliance" value="Privacy policy" id="comp5">
+                                <label for="comp5">Privacy policy</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="complianceOther" placeholder="Other compliance requirements">
+                        </div>
+                    </div>
+
+                    <!-- Question 37 -->
+                    <div class="question-container" data-question="37">
+                        <div class="section-label">Final Questions</div>
+                        <h2 class="question-title">Is there anything else we should know about your project?</h2>
+                        <div class="form-group">
+                            <textarea name="additionalInfo" placeholder="Share any other important details, concerns, or requirements"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Question 38 - Final -->
+                    <div class="question-container" data-question="38">
+                        <div class="section-label">Final Questions</div>
+                        <h2 class="question-title">What concerns or questions do you have about this project?</h2>
+                        <div class="form-group">
+                            <textarea name="concerns" placeholder="Let us know what you're worried about or curious about"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="button-group" id="buttonGroup">
+                        <button type="button" class="btn btn-prev" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                        <button type="button" class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Next →</button>
+                        <button type="submit" class="btn btn-next" id="submitBtn" style="display: none;">Submit</button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h2 class="success-title">Thank You!</h2>
+                    <p class="success-text">We've received your onboarding information. Our team will review it and contact you within 24-48 hours to discuss your project in detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 38;
+
+        function toggleOtherField(radioId, fieldId) {
+            const radio = document.getElementById(radioId);
+            const field = document.getElementById(fieldId);
+            
+            if (radio.checked) {
+                field.classList.remove('hidden');
+                field.classList.add('show');
+            }
+        }
+
+        // Hide "Other" fields when other radio buttons are selected
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                // Find all "other" fields for this question group
+                const questionContainer = this.closest('.question-container');
+                if (questionContainer) {
+                    const otherFields = questionContainer.querySelectorAll('.form-group.show');
+                    otherFields.forEach(field => {
+                        if (!this.id.includes('Other') && this.value !== 'Other') {
+                            field.classList.add('hidden');
+                            field.classList.remove('show');
+                        }
+                    });
+                }
+            });
+        });
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+        }
+
+        function showQuestion(questionNumber) {
+            document.querySelectorAll('.question-container').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.querySelector(`[data-question="${questionNumber}"]`).classList.add('active');
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = questionNumber === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = questionNumber === totalQuestions ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = questionNumber === totalQuestions ? 'block' : 'none';
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateCurrentQuestion() {
+            const currentContainer = document.querySelector(`[data-question="${currentQuestion}"]`);
+            
+            // Check for required text inputs and textareas
+            const requiredInputs = currentContainer.querySelectorAll('input[required], textarea[required]');
+            for (let input of requiredInputs) {
+                if (!input.value.trim()) {
+                    input.focus();
+                    input.style.borderColor = '#ef4444';
+                    setTimeout(() => {
+                        input.style.borderColor = '';
+                    }, 2000);
+                    return false;
+                }
+            }
+            
+            // Check for radio buttons (if any exist in this question)
+            const radioGroups = {};
+            const radios = currentContainer.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                if (!radioGroups[radio.name]) {
+                    radioGroups[radio.name] = [];
+                }
+                radioGroups[radio.name].push(radio);
+            });
+            
+            // If there are radio buttons, check if at least one is selected
+            for (let groupName in radioGroups) {
+                const isChecked = radioGroups[groupName].some(radio => radio.checked);
+                if (!isChecked) {
+                    // Highlight the first radio item
+                    radioGroups[groupName][0].closest('.radio-item').style.borderColor = '#ef4444';
+                    setTimeout(() => {
+                        radioGroups[groupName][0].closest('.radio-item').style.borderColor = '';
+                    }, 2000);
+                    return false;
+                }
+            }
+            
+            // Check if "Other" is selected and the text field is filled
+            const checkedRadios = currentContainer.querySelectorAll('input[type="radio"]:checked');
+            for (let radio of checkedRadios) {
+                if (radio.value === 'Other') {
+                    const otherField = currentContainer.querySelector('.form-group.show input[type="text"]');
+                    if (otherField && !otherField.value.trim()) {
+                        otherField.focus();
+                        otherField.style.borderColor = '#ef4444';
+                        setTimeout(() => {
+                            otherField.style.borderColor = '';
+                        }, 2000);
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+
+        function nextQuestion() {
+            if (!validateCurrentQuestion()) {
+                return;
+            }
+            
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        // Form submission
+        document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateCurrentQuestion()) {
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Process regular fields
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // REPLACE 'YOUR_GOOGLE_SCRIPT_URL_HERE' WITH YOUR ACTUAL GOOGLE APPS SCRIPT URL
+            fetch('https://script.google.com/macros/s/AKfycbwg5m7aisK_-BVOhGpDJpZjLW5rwLW2As-tA19YE9SASQmdxzs6_xLf2-j-QPfFVruj/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                // Hide the form and show success message
+                document.getElementById('onboardingForm').style.display = 'none';
+                document.querySelector('.progress-bar').style.display = 'none';
+                document.querySelector('.progress-text').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                
+                // Scroll to top to see success message
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again or contact us directly.');
+                submitBtn.textContent = 'Submit';
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Initialize
+        showQuestion(1);
+
+        // Phone number formatting
+        document.getElementById('phoneInput').addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+    </script>
+</body>
+</html>

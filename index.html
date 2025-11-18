@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Web Fortress</title>
-    <link rel="icon" type="image/jpeg" href="Screenshot 2025-09-03 183904.png">
+    <link rel="icon" type="image/jpeg" href="Web Fortress-01.png">
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="logo">
-    <img src="Screenshot 2025-09-03 183904.png" alt="The Web Fortress Logo">
+    <img src="Web Fortress-01.png" alt="The Web Fortress Logo">
     The Web Fortress
 </div>
         
@@ -28,7 +28,7 @@
         <div class="hero-left">
             <h1>
                 Get Leads
-                <span class="highlight">While Staying Secure</span>
+                <span class="highlight">While Staying Secure </span>
             </h1>
             <p>Premium web development for businesses that demand excellence. Not just beautiful—strategically designed to drive results.</p>
             <div class="hero-buttons">
@@ -61,7 +61,7 @@
     <section class="stats-diagonal">
         <div class="stats-grid">
             <div class="stat-item">
-                <div class="stat-number">200000</div>
+                <div class="stat-number">200,000</div>
                 <div class="stat-label">Over Site Views</div>
             </div>
             <div class="stat-item">
@@ -454,17 +454,17 @@
                     const target = number.textContent;
                     const isPercent = target.includes('%');
                     const isMultiplier = target.includes('x');
-                    const value = parseFloat(target);
+                    const value = parseFloat(target.replace(/,/g, ''));
                     
                     let current = 0;
                     const increment = value / 50;
                     const timer = setInterval(() => {
                         current += increment;
                         if (current >= value) {
-                            number.textContent = value + (isPercent ? '%' : isMultiplier ? 'x' : '');
+                            number.textContent = value.toLocaleString() + (isPercent ? '%' : isMultiplier ? 'x' : '');
                             clearInterval(timer);
                         } else {
-                            const display = isMultiplier ? current.toFixed(1) : Math.floor(current);
+                            const display = isMultiplier ? current.toFixed(1) : Math.floor(current).toLocaleString();
                             number.textContent = display + (isPercent ? '%' : isMultiplier ? 'x' : '');
                         }
                     }, 30);
