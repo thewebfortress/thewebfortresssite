@@ -259,16 +259,24 @@
             gap: 1rem;
         }
         .radio-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 1.5rem;
-            background: var(--bg-dark);
-            border: 2px solid var(--gray-100);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-dark);
+    border: 2px solid var(--gray-100);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+.radio-item input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--teal);
+    pointer-events: none;
+}
         .radio-item:hover {
             border-color: var(--teal);
             background: var(--gray-100);
@@ -402,7 +410,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="progress-text" id="progressText">Question 1 of 40</div>
+                <div class="progress-text" id="progressText">Question 1 of 32</div>
 
                 <form id="onboardingForm">
                     <!-- Question 1 -->
@@ -742,32 +750,10 @@
                         </div>
                     </div>
 
-                    <!-- Question 18 -->
-                    <div class="question-container" data-question="18">
-                        <div class="section-label">Features & Functionality</div>
-                        <h2 class="question-title">Do you need content creation help?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="contentHelp" value="Yes, all content" id="content1">
-                                <label for="content1">Yes, need all content written</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="contentHelp" value="Yes, some help" id="content2">
-                                <label for="content2">Yes, need some help</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="contentHelp" value="No" id="content3">
-                                <label for="content3">No, I'll provide all content</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="contentHelp" value="Not sure" id="content4">
-                                <label for="content4">Not sure</label>
-                            </div>
-                        </div>
-                    </div>
+                   
 
                     <!-- Question 19 -->
-                    <div class="question-container" data-question="19">
+                    <div class="question-container" data-question="18">
                         <div class="section-label">Features & Functionality</div>
                         <h2 class="question-title">Do you have professional photos/images?</h2>
                         <div class="radio-group">
@@ -787,7 +773,7 @@
                     </div>
 
                     <!-- Question 20 -->
-                    <div class="question-container" data-question="20">
+                    <div class="question-container" data-question="19">
                         <div class="section-label">Design Preferences</div>
                         <h2 class="question-title">What style do you prefer?</h2>
                         <div class="radio-group">
@@ -823,25 +809,25 @@
                     </div>
 
                     <!-- Question 21 -->
-                    <div class="question-container" data-question="21">
+                    <div class="question-container" data-question="20">
                         <div class="section-label">Design Preferences</div>
                         <h2 class="question-title">What are your preferred colors?</h2>
                         <div class="form-group">
                             <label>Primary color (if any)</label>
-                            <input type="text" name="primaryColor" placeholder="e.g., Blue, #0066cc, or leave blank">
+                            <input type="text" name="primaryColor" placeholder="e.g., Blue or leave blank">
                         </div>
                         <div class="form-group">
                             <label>Secondary color (if any)</label>
-                            <input type="text" name="secondaryColor" placeholder="e.g., Gray, #333333, or leave blank">
+                            <input type="text" name="secondaryColor" placeholder="e.g., Gray, or leave blank">
                         </div>
                         <div class="form-group">
                             <label>Accent color (if any)</label>
-                            <input type="text" name="accentColor" placeholder="e.g., Orange, #ff6600, or leave blank">
+                            <input type="text" name="accentColor" placeholder="e.g., Orange, or leave blank">
                         </div>
                     </div>
 
                     <!-- Question 22 -->
-                    <div class="question-container" data-question="22">
+                    <div class="question-container" data-question="21">
                         <div class="section-label">Design Preferences</div>
                         <h2 class="question-title">Any design elements you DON'T want?</h2>
                         <div class="form-group">
@@ -849,32 +835,8 @@
                         </div>
                     </div>
 
-                    <!-- Question 23 -->
-                    <div class="question-container" data-question="23">
-                        <div class="section-label">Technical Requirements</div>
-                        <h2 class="question-title">Do you need SEO (search engine optimization)?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="seo" value="Yes, top priority" id="seo1">
-                                <label for="seo1">Yes, top priority</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="seo" value="Yes, basic" id="seo2">
-                                <label for="seo2">Yes, but basic</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="seo" value="Not sure" id="seo3">
-                                <label for="seo3">Not sure</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="seo" value="No" id="seo4">
-                                <label for="seo4">No</label>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Question 24 -->
-                    <div class="question-container" data-question="24">
+                    <div class="question-container" data-question="22">
                         <div class="section-label">Technical Requirements</div>
                         <h2 class="question-title">Do you need the site in multiple languages?</h2>
                         <div class="radio-group">
@@ -892,52 +854,10 @@
                         </div>
                     </div>
 
-                    <!-- Question 25 -->
-                    <div class="question-container" data-question="25">
-                        <div class="section-label">Technical Requirements</div>
-                        <h2 class="question-title">Do you need ongoing maintenance after launch?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="maintenance" value="Yes, monthly" id="maint1">
-                                <label for="maint1">Yes, monthly updates</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="maintenance" value="Yes, as needed" id="maint2">
-                                <label for="maint2">Yes, as needed</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="maintenance" value="No" id="maint3">
-                                <label for="maint3">No, I'll handle it</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="maintenance" value="Not sure" id="maint4">
-                                <label for="maint4">Not sure</label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Question 26 -->
-                    <div class="question-container" data-question="26">
-                        <div class="section-label">Technical Requirements</div>
-                        <h2 class="question-title">Will you need training on how to update the site?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="training" value="Yes, comprehensive" id="train1">
-                                <label for="train1">Yes, comprehensive training</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="training" value="Yes, basic" id="train2">
-                                <label for="train2">Yes, basic training</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="training" value="No" id="train3">
-                                <label for="train3">No</label>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Question 27 -->
-                    <div class="question-container" data-question="27">
+                    <div class="question-container" data-question="23">
                         <div class="section-label">Technical Requirements</div>
                         <h2 class="question-title">Do you have a domain name?</h2>
                         <div class="radio-group">
@@ -959,31 +879,9 @@
                         </div>
                     </div>
 
-                    <!-- Question 28 -->
-                    <div class="question-container" data-question="28">
-                        <div class="section-label">Technical Requirements</div>
-                        <h2 class="question-title">Do you have hosting?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="hosting" value="Yes" id="host1">
-                                <label for="host1">Yes</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="hosting" value="No" id="host2">
-                                <label for="host2">No, need hosting recommendations</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="hosting" value="Not sure" id="host3">
-                                <label for="host3">Not sure</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="hostingProvider" placeholder="If yes, who is your host?">
-                        </div>
-                    </div>
 
                     <!-- Question 29 -->
-                    <div class="question-container" data-question="29">
+                    <div class="question-container" data-question="24">
                         <div class="section-label">Timeline & Budget</div>
                         <h2 class="question-title">When do you need the website completed?</h2>
                         <div class="radio-group">
@@ -1011,7 +909,7 @@
                     </div>
 
                     <!-- Question 30 -->
-                    <div class="question-container" data-question="30">
+                    <div class="question-container" data-question="25">
                         <div class="section-label">Timeline & Budget</div>
                         <h2 class="question-title">What is your budget range?</h2>
                         <div class="radio-group">
@@ -1038,28 +936,9 @@
                         </div>
                     </div>
 
-                    <!-- Question 31 -->
-                    <div class="question-container" data-question="31">
-                        <div class="section-label">Timeline & Budget</div>
-                        <h2 class="question-title">Is this a one-time project or ongoing relationship?</h2>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" name="relationship" value="One-time" id="rel1">
-                                <label for="rel1">One-time project</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="relationship" value="Ongoing" id="rel2">
-                                <label for="rel2">Ongoing (maintenance, updates, marketing)</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="relationship" value="Not sure" id="rel3">
-                                <label for="rel3">Not sure</label>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Question 32 -->
-                    <div class="question-container" data-question="32">
+                    <div class="question-container" data-question="26">
                         <div class="section-label">Success Metrics</div>
                         <h2 class="question-title">How will you measure the success of this website?</h2>
                         <div class="checkbox-group">
@@ -1098,7 +977,7 @@
                     </div>
 
                     <!-- Question 33 -->
-                    <div class="question-container" data-question="33">
+                    <div class="question-container" data-question="27">
                         <div class="section-label">Success Metrics</div>
                         <h2 class="question-title">Do you currently track website analytics?</h2>
                         <div class="radio-group">
@@ -1121,7 +1000,7 @@
                     </div>
 
                     <!-- Question 34 -->
-                    <div class="question-container" data-question="34">
+                    <div class="question-container" data-question="28">
                         <div class="section-label">Additional Information</div>
                         <h2 class="question-title">Are there any technical integrations needed?</h2>
                         <div class="checkbox-group">
@@ -1152,7 +1031,7 @@
                     </div>
 
                     <!-- Question 35 -->
-                    <div class="question-container" data-question="35">
+                    <div class="question-container" data-question="29">
                         <div class="section-label">Additional Information</div>
                         <h2 class="question-title">Any specific accessibility requirements?</h2>
                         <div class="form-group">
@@ -1161,7 +1040,7 @@
                     </div>
 
                     <!-- Question 36 -->
-                    <div class="question-container" data-question="36">
+                    <div class="question-container" data-question="30">
                         <div class="section-label">Additional Information</div>
                         <h2 class="question-title">Are there any legal/compliance requirements?</h2>
                         <div class="checkbox-group">
@@ -1192,7 +1071,7 @@
                     </div>
 
                     <!-- Question 37 -->
-                    <div class="question-container" data-question="37">
+                    <div class="question-container" data-question="31">
                         <div class="section-label">Final Questions</div>
                         <h2 class="question-title">Is there anything else we should know about your project?</h2>
                         <div class="form-group">
@@ -1201,7 +1080,7 @@
                     </div>
 
                     <!-- Question 38 - Final -->
-                    <div class="question-container" data-question="38">
+                    <div class="question-container" data-question="32">
                         <div class="section-label">Final Questions</div>
                         <h2 class="question-title">What concerns or questions do you have about this project?</h2>
                         <div class="form-group">
@@ -1213,7 +1092,7 @@
                     <div class="button-group" id="buttonGroup">
                         <button type="button" class="btn btn-prev" id="prevBtn" onclick="previousQuestion()">← Previous</button>
                         <button type="button" class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Next →</button>
-                        <button type="submit" class="btn btn-next" id="submitBtn" style="display: none;">Submit</button>
+                        <button type="button" class="btn btn-next" id="submitBtn" style="display: none;" onclick="submitForm()">Submit</button>
                     </div>
                 </form>
 
@@ -1229,7 +1108,7 @@
 
     <script>
         let currentQuestion = 1;
-        const totalQuestions = 38;
+        const totalQuestions = 32;
 
         function toggleOtherField(radioId, fieldId) {
             const radio = document.getElementById(radioId);
@@ -1266,19 +1145,26 @@
         }
 
         function showQuestion(questionNumber) {
-            document.querySelectorAll('.question-container').forEach(q => {
-                q.classList.remove('active');
-            });
-            document.querySelector(`[data-question="${questionNumber}"]`).classList.add('active');
-            
-            // Update buttons
-            document.getElementById('prevBtn').style.display = questionNumber === 1 ? 'none' : 'block';
-            document.getElementById('nextBtn').style.display = questionNumber === totalQuestions ? 'none' : 'block';
-            document.getElementById('submitBtn').style.display = questionNumber === totalQuestions ? 'block' : 'none';
-            
-            updateProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    const questionElement = document.querySelector(`[data-question="${questionNumber}"]`);
+    
+    if (!questionElement) {
+        console.error(`Question ${questionNumber} not found!`);
+        return;
+    }
+    
+    document.querySelectorAll('.question-container').forEach(q => {
+        q.classList.remove('active');
+    });
+    questionElement.classList.add('active');
+    
+    // Update buttons
+    document.getElementById('prevBtn').style.display = questionNumber === 1 ? 'none' : 'block';
+    document.getElementById('nextBtn').style.display = questionNumber === totalQuestions ? 'none' : 'block';
+    document.getElementById('submitBtn').style.display = questionNumber === totalQuestions ? 'block' : 'none';
+    
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
         function validateCurrentQuestion() {
             const currentContainer = document.querySelector(`[data-question="${currentQuestion}"]`);
@@ -1420,6 +1306,30 @@
             let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
         });
+        // Make entire radio/checkbox boxes clickable
+document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        // Don't trigger if clicking directly on the input
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
+            const input = this.querySelector('input[type="radio"], input[type="checkbox"]');
+            if (input) {
+                if (input.type === 'radio') {
+                    input.checked = true;
+                    // Trigger change event for "Other" field functionality
+                    input.dispatchEvent(new Event('change'));
+                } else {
+                    input.checked = !input.checked;
+                }
+            }
+        }
+    });
+});
+function submitForm() {
+    if (!validateCurrentQuestion()) {
+        return;
+    }
+    document.getElementById('onboardingForm').dispatchEvent(new Event('submit', { cancelable: true }));
+}
     </script>
 </body>
 </html>
