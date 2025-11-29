@@ -87,7 +87,7 @@
         }
         /* Hero Section with Split Layout */
         .hero {
-            min-height: 100vh;
+            min-height: 10vh;
             display: grid;
             grid-template-columns: 1fr 1fr;
             margin-top: 0;
@@ -256,10 +256,10 @@
             pointer-events: none;
         }
         .before-image {
-            background-image: url('before.png');
+            background-image: url('detialingsite.png');
         }
         .after-image {
-            background-image: url('detialingsite.png');
+            background-image: url('before.png');
             clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
         }
         .slider-line {

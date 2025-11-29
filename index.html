@@ -47,8 +47,8 @@
                     <div class="before-after-container">
                         <div class="before-image"></div>
                         <div class="after-image" id="afterImage"></div>
-                        <div class="before-label">BEFORE</div>
-                        <div class="after-label">AFTER</div>
+                        <div class="before-label">AFTER</div>
+                        <div class="after-label">BEFORE</div>
                         <div class="slider-line" id="sliderLine">
                             <div class="slider-button" id="sliderButton"></div>
                         </div>
@@ -108,7 +108,7 @@
             </div>
             <div class="bento-item">
                 <div class="bento-image">
-                    <img src="message.png" alt="LuxeCommerce Store">
+                    <img src="message.png" >
                     <div class="bento-overlay">
                         <h3 style="color: white; font-size: 2rem; font-weight: 700;">Cloak</h3>
                     </div>
@@ -311,7 +311,6 @@
                 <ul class="footer-links">
                     <li><a href="#services">Web Design</a></li>
                     <li><a href="#services">Development</a></li>
-                    <li><a href="#services">E-Commerce</a></li>
                     <li><a href="#services">Optimization</a></li>
                 </ul>
             </div>
@@ -328,7 +327,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2024 The Web Fortress. All rights reserved.</p>
+            <p>© 2025 The Web Fortress. All rights reserved.</p>
         </div>
     </footer>
     <script>
@@ -477,17 +476,6 @@
         });
         
         // Browser mockup parallax
-        const heroRight = document.querySelector('.hero-right');
-        const mockup = document.querySelector('.browser-mockup');
-        
-        window.addEventListener('scroll', () => {
-            if (heroRight) {
-                const scrolled = window.scrollY;
-                if (scrolled < window.innerHeight) {
-                    mockup.style.transform = `perspective(1000px) rotateY(-5deg) translateY(${scrolled * 0.3}px)`;
-                }
-            }
-        });
         // Contact Form Handler
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
